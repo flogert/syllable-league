@@ -13,6 +13,37 @@ const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
 }
 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(type) {
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  if (type === 'correct') {
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(500, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.1);
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.5);
+  } else {
+    oscillator.type = 'sawtooth';
+    oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.3);
+  }
+}
+
 inputField.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         enterPressed = true;
@@ -215,13 +246,16 @@ async function getValue() {
     // Remove spaces and apostrophes from the input
     input = input.replace(/'/g,'');
 
-    champImage.data = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${input}_${random}.jpg`;
-
     if (inputValue.toLowerCase() === currentChamp.id.toLowerCase()) {
+        champImage.data = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${input}_${random}.jpg`;
         correct.style.display = 'flex';
         incorrect.style.display = 'none';
+        playSound('correct');
         score += 1;
         scoreValue.innerHTML = `Score: ${score}`;
+        
+        await delay(2000); // Wait for 2 seconds to show the image
+        
         reset();
         getRandomChampion();
         await getSyllable();
@@ -231,6 +265,7 @@ async function getValue() {
     } else {
         correct.style.display = 'none';
         incorrect.style.display = 'flex';
+        playSound('incorrect');
         inputField.value = '';
     }
 }
@@ -239,6 +274,7 @@ function reset() {
     const ul = document.getElementById("list");
     inputField.value = '';
     ul.innerHTML = '';
+    champImage.data = ''; // Clear the image
 }
 
 
