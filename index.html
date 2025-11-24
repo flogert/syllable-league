@@ -20,22 +20,35 @@
         <button class="sign-in">Sign In</button>
         <button class="sign-up">Sign Up</button>
     </nav>
-    <section>
-        <div class="play">
-            <div class="text">
-                <h1>ONE SYLLABLE LEAGUE</h1>
-                <div>
-                    <p>Guess the champion based on the syllables given!
-                    </p>
-                    
-                </div> 
-            </div>
-            <div class="play-area">
-                <div class="left">
-                    <button id="start" onclick="startGame()">Start</button>
-                    <div>
-                        <input id="inputValue" name="name" type="text" id="name" placeholder="Champion Name" onkeydown="getValue()" required />
+    <section class="game-container">
+        <div class="game-header">
+            <h1>ONE SYLLABLE LEAGUE</h1>
+            <p>Guess the champion based on the syllables given!</p>
+        </div>
 
+        <div class="game-stats">
+            <div id="timer" class="stat-item">100</div>
+            <div id="score" class="stat-item">Score: 0</div>
+        </div>
+
+        <div class="game-board">
+            <div class="clues-panel">
+                <button id="words" onclick="getSyllable()" class="btn-reveal">Reveal Syllables</button>
+                <ul id="list" class="syllable-list">
+                    <!-- Syllables will appear here -->
+                </ul>
+            </div>
+
+            <div class="action-panel">
+                <div class="controls">
+                    <button id="start" onclick="startGame()" class="btn-start">Start Game</button>
+                    <button id="skip" class="btn-skip">Skip</button>
+                </div>
+                
+                <div class="input-wrapper">
+                    <input id="inputValue" name="name" type="text" placeholder="Enter Champion Name..." required autocomplete="off" />
+                    
+                    <div class="feedback-icon">
                         <svg height="45px" width="45px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-133.12 -133.12 778.24 778.24" class="correct hidden" xml:space="preserve" fill="#000000" stroke="#000000" stroke-width="0.00512" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"><rect x="-133.12" y="-133.12" width="778.24" height="778.24" rx="389.12" fill="#8565a4" strokewidth="0">
                         </rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="21.503999999999998"></g><g id="SVGRepo_iconCarrier">
                         <polygon style="fill:#09ce20;" points="202.624,478.016 0,291.36 70.512,214.8 191.968,326.656 431.44,33.984 512,99.904 "></polygon> </g>
@@ -46,21 +59,13 @@
                         <path fill="#df3a3a" d="M36 32a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v28z"></path><path fill="#FFF" d="M21.529 18.006l8.238-8.238a2.498 2.498 0 0 0 0-3.535a2.498 2.498 0 0 0-3.535 0l-8.238 8.238l-8.238-8.238a2.498 2.498 0 0 0-3.535 0a2.498 2.498 0 0 0 0 3.535l8.238 8.238l-8.258 8.258a2.498 2.498 0 0 0 1.768 4.267c.64 0 1.28-.244 1.768-.732l8.258-8.259l8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732a2.498 2.498 0 0 0 0-3.535l-8.24-8.237z"></path></g>
                         </svg>
                     </div>
-                    <button id="skip" onclick="skipChampion()">Skip</button>
-                </div>
-                <div class="mid">
-                    <div id="timer"></div>
-                    <div id="score"><span>Score: </span></div>
-                </div>
-                <div class="right">
-                    <button id="words" onclick="getSyllable()">Syllables</button>
-                    <ul id="list">
-                        <li></li>
-                    </ul>
                 </div>
             </div>
-            <div class="image-area">
-                <object id="champImage" type="image/png" data="" width="400" height="250"></object>
+
+            <div class="image-panel">
+                <div class="image-frame">
+                    <object id="champImage" type="image/png" data="" width="400" height="250"></object>
+                </div>
             </div>
         </div>
     </section>

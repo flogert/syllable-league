@@ -20,8 +20,10 @@ inputField.addEventListener('keyup', (event) => {
     }
 });
 
-const skipButton = document.getElementById('skipButton');
-skipButton.addEventListener('click', skipChampion);
+const skipButton = document.getElementById('skip');
+if (skipButton) {
+    skipButton.addEventListener('click', skipChampion);
+}
 
 function startGame() {
     onTimer();
