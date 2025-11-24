@@ -17,6 +17,9 @@ inputField.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         enterPressed = true;
         getValue();
+    } else {
+        correct.style.display = 'none';
+        incorrect.style.display = 'none';
     }
 });
 
@@ -26,6 +29,8 @@ if (skipButton) {
 }
 
 function startGame() {
+    score = 0;
+    scoreValue.innerHTML = `Score: ${score}`;
     onTimer();
     reset();
     getRandomChampion();
@@ -226,8 +231,7 @@ async function getValue() {
     } else {
         correct.style.display = 'none';
         incorrect.style.display = 'flex';
-        reset();
-        await getSyllable();    
+        inputField.value = '';
     }
 }
 
@@ -235,7 +239,6 @@ function reset() {
     const ul = document.getElementById("list");
     inputField.value = '';
     ul.innerHTML = '';
-    score = 0;
 }
 
 
